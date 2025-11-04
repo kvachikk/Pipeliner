@@ -8,7 +8,7 @@
    "scripts": {
       "start": "nest start",
       "build": "nest build",
-      "prepare": "npm run lint & npm run format",
+      "prepare": "husky",
       "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
       "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,html,css}\"",
       "start:dev": "nest start --watch",
@@ -49,7 +49,9 @@
       "eslint-import-resolver-typescript": "^4.4.4",
       "eslint-plugin-prettier": "^5.2.2",
       "globals": "^16.0.0",
+      "husky": "^9.1.7",
       "jest": "^30.0.0",
+      "lint-staged": "^16.2.6",
       "prettier": "^3.6.2",
       "source-map-support": "^0.5.21",
       "supertest": "^7.0.0",
@@ -76,5 +78,9 @@
       ],
       "coverageDirectory": "../coverage",
       "testEnvironment": "node"
+   },
+   "lint-staged": {
+      "*.{ts,tsx,js,jsx}": "eslint --fix",
+      "*.{ts,tsx,js,jsx,json,md,yml,html,css}": "prettier --write"
    }
 }
