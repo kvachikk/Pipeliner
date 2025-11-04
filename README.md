@@ -8,7 +8,7 @@
 
 # ІС-34 Погорілець Владислав (NodeJS)
 
-# Pipeliner 
+# Pipeliner
 
 High-performance Node.js backend for fast RSS content aggregation and delivery.
 
@@ -18,20 +18,20 @@ This project is being developed as part of a university Node.js course, covering
 
 ## Core Functionality
 
-* **Feed Management:** A RESTful API (documented via **Swagger**) for adding, removing, and grouping RSS feeds.
-* **Content Aggregation:** A background scheduler (`@nestjs/schedule`) periodically polls all registered RSS feeds, parses them, and stores new articles.
-* **Data Persistence:** All users, subscriptions, and articles are stored in a **PostgreSQL** database managed by the **Sequelize** ORM.
-* **Fast Caching:** **Redis** is used to cache frequently accessed data (such as hot articles or user sessions) to reduce database load.
-* **Authentication:** (Planned) A full-featured user authentication system to store personal subscriptions.
+- **Feed Management:** A RESTful API (documented via **Swagger**) for adding, removing, and grouping RSS feeds.
+- **Content Aggregation:** A background scheduler (`@nestjs/schedule`) periodically polls all registered RSS feeds, parses them, and stores new articles.
+- **Data Persistence:** All users, subscriptions, and articles are stored in a **PostgreSQL** database managed by the **Sequelize** ORM.
+- **Fast Caching:** **Redis** is used to cache frequently accessed data (such as hot articles or user sessions) to reduce database load.
+- **Authentication:** (Planned) A full-featured user authentication system to store personal subscriptions.
 
 ## Future Plans
 
 The initial focus is on RSS, but the architecture is designed for extensibility.
 
-* **"Any-Source" Reader:** Evolve beyond RSS to aggregate content from other sources, such as Twitter, Reddit, or Telegram channels.
-* **Module Refactoring:** Identify core modules (e.g., parsing logic) and extract them into separate, independent libraries.
-* **Performance Optimization:** Conduct in-depth performance analysis and resolve identified bottlenecks.
-* **Full E2E Testing:** Expand the **Playwright** test suite to cover all critical user scenarios.
+- **"Any-Source" Reader:** Evolve beyond RSS to aggregate content from other sources, such as Twitter, Reddit, or Telegram channels.
+- **Module Refactoring:** Identify core modules (e.g., parsing logic) and extract them into separate, independent libraries.
+- **Performance Optimization:** Conduct in-depth performance analysis and resolve identified bottlenecks.
+- **Full E2E Testing:** Expand the **Playwright** test suite to cover all critical user scenarios.
 
 ## Tooling & Tech Stack
 

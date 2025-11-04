@@ -22,7 +22,7 @@
    },
    "dependencies": {
       "@nestjs/common": "^11.0.1",
-      "@nestjs/core": "^11.0.1",
+      "@nestjs/core": "^11.1.8",
       "@nestjs/platform-express": "^11.0.1",
       "@nestjs/swagger": "^11.2.1",
       "@typescript-eslint/eslint-plugin": "^8.46.3",
@@ -46,6 +46,7 @@
       "@types/supertest": "^6.0.2",
       "eslint": "^9.9.1",
       "eslint-config-prettier": "^10.0.1",
+      "eslint-import-resolver-typescript": "^4.4.4",
       "eslint-plugin-prettier": "^5.2.2",
       "globals": "^16.0.0",
       "jest": "^30.0.0",
