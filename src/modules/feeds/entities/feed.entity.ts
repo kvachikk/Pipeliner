@@ -1,8 +1,3 @@
-export class Feed {
-   id: string;
-   url: string;
-   title: string;
-   lastFetchedAt?: Date;
-   createdAt: Date;
-   updatedAt: Date;
-}
+import { Feed as SequelizeFeed } from '../../../common/database/models/feed.models';
+
+export { SequelizeFeed as Feed };

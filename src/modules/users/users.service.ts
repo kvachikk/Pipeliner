@@ -1,56 +1,48 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+
+import { User } from '../../common/database/models/user.models';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-   private users: User[] = [
-      {
-         id: 'user-1',
-         email: 'test@example.com',
-         passwordHash: 'hashed_password_123',
-         createdAt: new Date(),
-         updatedAt: new Date(),
-      },
-   ];
+   constructor(@InjectModel(User) private userRepository: typeof User) {}
 
-   create(createUserDto: CreateUserDto): User {
-      const newUser: User = {
-         id: 'user-' + Date.now(),
+   async create(createUserDto: CreateUserDto): Promise<User> {
+      // TODO: hashing
+      return await this.userRepository.create({
          email: createUserDto.email,
-         passwordHash: 'mock_hash_' + createUserDto.password,
-         createdAt: new Date(),
-         updatedAt: new Date(),
-      };
-      this.users.push(newUser);
-      return newUser;
+         passwordHash: 'hash_' + createUserDto.password,
+      });
    }
 
-   findAll(): User[] {
-      return this.users;
+   async findAll(): Promise<User[]> {
+      return await this.userRepository.findAll();
    }
 
-   findOne(id: string): User | undefined {
-      return this.users.find((user) => user.id === id);
+   async findOne(id: string): Promise<User | null> {
+      return await this.userRepository.findByPk(id);
    }
 
-   update(id: string, updateUserDto: UpdateUserDto): User | undefined {
-      const userIndex = this.users.findIndex((user) => user.id === id);
-      if (userIndex > -1) {
-         this.users[userIndex] = { ...this.users[userIndex], ...updateUserDto, updatedAt: new Date() };
-         return this.users[userIndex];
+   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
+      const user = await this.userRepository.findByPk(id);
+      if (!user) return null;
+      if (updateUserDto.password) {
+         user.passwordHash = 'hash_' + updateUserDto.password;
       }
-      return undefined;
+      if (updateUserDto.email) {
+         user.email = updateUserDto.email;
+      }
+      await user.save();
+      return user;
    }
 
-   remove(id: string): boolean {
-      const userIndex = this.users.findIndex((user) => user.id === id);
-      if (userIndex > -1) {
-         this.users.splice(userIndex, 1);
-         return true;
-      }
-      return false;
+   async remove(id: string): Promise<boolean> {
+      const user = await this.userRepository.findByPk(id);
+      if (!user) return false;
+      await user.destroy();
+      return true;
    }
 }

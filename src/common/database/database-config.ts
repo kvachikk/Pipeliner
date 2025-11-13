@@ -1,5 +1,9 @@
 export interface DatabaseConfig {
-   url: string;
+   host?: string;
+   port?: number;
+   username?: string;
+   password?: string;
+   database?: string;
    dialect: 'postgres';
    logging: boolean;
    pool: {
