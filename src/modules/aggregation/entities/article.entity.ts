@@ -1,10 +1,3 @@
-export class Article {
-   id: string;
-   feedId: string;
-   externalId?: string;
-   title: string;
-   link: string;
-   publishedAt?: Date;
-   content?: string;
-   createdAt: Date;
-}
+import { Article as SequelizeArticle } from '../../../common/database/models/article.models';
+
+export { SequelizeArticle as Article };

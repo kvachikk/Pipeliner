@@ -1,68 +1,41 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+
+import { Feed } from '../../common/database/models/feed.models';
 
 import { CreateFeedDto } from './dto/create-feed.dto';
 import { UpdateFeedDto } from './dto/update-feed.dto';
-import { Feed } from './entities/feed.entity';
 
 @Injectable()
 export class FeedsService {
-   // mock
-   private feeds: Feed[] = [
-      {
-         id: '1',
-         url: 'https://dou.ua/feed/',
-         title: 'DOU.ua',
-         createdAt: new Date(),
-         updatedAt: new Date(),
-      },
-      {
-         id: '2',
-         url: 'https://dev.to/feed',
-         title: 'DEV Community',
-         createdAt: new Date(),
-         updatedAt: new Date(),
-      },
-   ];
+   constructor(
+      @InjectModel(Feed)
+      private feedRepository: typeof Feed,
+   ) {}
 
-   create(createFeedDto: CreateFeedDto): Feed {
-      const newFeed: Feed = {
-         id: Date.now().toString(),
-         url: createFeedDto.url,
-         title: createFeedDto.title || 'New Feed',
-         createdAt: new Date(),
-         updatedAt: new Date(),
-      };
-      this.feeds.push(newFeed);
-      return newFeed;
+   async create(createFeedDto: CreateFeedDto): Promise<Feed> {
+      return await this.feedRepository.create({ ...createFeedDto });
    }
 
-   findAll(): Feed[] {
-      return this.feeds;
+   async findAll(): Promise<Feed[]> {
+      return await this.feedRepository.findAll();
    }
 
-   findOne(id: string): Feed | undefined {
-      return this.feeds.find((feed) => feed.id === id);
+   async findOne(id: string): Promise<Feed | null> {
+      return await this.feedRepository.findByPk(id);
    }
 
-   update(id: string, updateFeedDto: UpdateFeedDto): Feed | undefined {
-      const feedIndex = this.feeds.findIndex((feed) => feed.id === id);
-      if (feedIndex > -1) {
-         this.feeds[feedIndex] = {
-            ...this.feeds[feedIndex],
-            ...updateFeedDto,
-            updatedAt: new Date(),
-         };
-         return this.feeds[feedIndex];
-      }
-      return undefined;
+   async update(id: string, updateFeedDto: UpdateFeedDto): Promise<Feed | null> {
+      const feed = await this.feedRepository.findByPk(id);
+      if (!feed) return null;
+      await feed.update(updateFeedDto);
+      return feed;
    }
 
-   remove(id: string): boolean {
-      const feedIndex = this.feeds.findIndex((feed) => feed.id === id);
-      if (feedIndex > -1) {
-         this.feeds.splice(feedIndex, 1);
-         return true;
-      }
-      return false;
+   async remove(id: string): Promise<boolean> {
+      const feed = await this.feedRepository.findByPk(id);
+      if (!feed) return false;
+      await feed.destroy();
+      return true;
    }
 }

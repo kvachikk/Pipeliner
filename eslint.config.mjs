@@ -29,6 +29,7 @@ export default [
          import: importPlugin,
       },
       rules: {
+         'no-unused-vars': 'off',
          '@typescript-eslint/no-floating-promises': 'error',
          '@typescript-eslint/no-unsafe-argument': 'error',
          '@typescript-eslint/no-explicit-any': 'warn',

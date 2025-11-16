@@ -1,7 +1,3 @@
-export class User {
-   id: string;
-   email: string;
-   passwordHash: string;
-   createdAt: Date;
-   updatedAt: Date;
-}
+import { User as SequelizeUser } from '../../../common/database/models/user.models';
+
+export { SequelizeUser as User };
