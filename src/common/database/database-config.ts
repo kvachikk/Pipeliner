@@ -1,19 +1,22 @@
+import { Dialect } from 'sequelize';
+
 export interface DatabaseConfig {
    host?: string;
    port?: number;
    username?: string;
    password?: string;
    database?: string;
-   dialect: 'postgres';
+   storage?: string; // For SQLite
+   dialect: Dialect;
    logging: boolean;
-   pool: {
+   pool?: {
       max: number;
       min: number;
       acquire: number;
       idle: number;
    };
-   dialectOptions: {
-      ssl: {
+   dialectOptions?: {
+      ssl?: {
          require: boolean;
          rejectUnauthorized: boolean;
       };

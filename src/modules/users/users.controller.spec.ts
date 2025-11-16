@@ -236,7 +236,7 @@ describe('UsersController', () => {
 
          const result = await controller.update(userId, updateUserDto);
          expect(result).toEqual(updatedUser);
-         expect(result.email).toBe('newemail@example.com');
+         expect(result?.email).toBe('newemail@example.com');
          expect(service.update).toHaveBeenCalledWith(userId, updateUserDto);
       });
 

@@ -6,6 +6,9 @@ on:
    pull_request:
       branches:
          - main
+         - lab-8
+         - lab-7
+         - lab-6
          - lab-5
          - lab-4
          - lab-3
