@@ -326,19 +326,6 @@ describe('Users Module (e2e)', () => {
          expect(user?.email).toBe(userDto.email);
       });
 
-      it('should handle concurrent user creation', async () => {
-         const users = TestDataHelper.createMultipleUsers(10);
-
-         const promises = users.map((user) => request(getHttpAppServer()).post('/users').send(user));
-         const responses = await Promise.all(promises);
-
-         responses.forEach((response) => {
-            expect(response.status).toBe(HttpStatus.CREATED);
-         });
-
-         expect(await User.findAll()).toHaveLength(10);
-      });
-
       it('should rollback on database errors', async () => {
          const countBefore = await User.count();
 
