@@ -4,7 +4,12 @@ name: Node.js CI
 
 on:
    pull_request:
-      branches: ['main, lab-5, lab-4, lab-3, lab-2']
+      branches:
+         - main
+         - lab-5
+         - lab-4
+         - lab-3
+         - lab-2
 
 jobs:
    lint:
