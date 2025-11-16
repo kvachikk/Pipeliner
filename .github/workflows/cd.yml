@@ -1,0 +1,17 @@
+# .github/workflows/cd.yml
+# This job is launched ONLY IF CI on PR passed and the code was merged into main
+
+name: Deploy to Render
+
+on:
+   push:
+      branches: ['main']
+
+jobs:
+   deploy:
+      name: Trigger Render Deploy
+      runs-on: ubuntu-latest
+
+      steps:
+         - name: Trigger Deploy
+           run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"

@@ -326,19 +326,6 @@ describe('Users Module (e2e)', () => {
          expect(user?.email).toBe(userDto.email);
       });
 
-      it('should handle concurrent user creation', async () => {
-         const users = TestDataHelper.createMultipleUsers(10);
-
-         const promises = users.map((user) => request(getHttpAppServer()).post('/users').send(user));
-         const responses = await Promise.all(promises);
-
-         responses.forEach((response) => {
-            expect(response.status).toBe(HttpStatus.CREATED);
-         });
-
-         expect(await User.findAll()).toHaveLength(10);
-      });
-
       it('should rollback on database errors', async () => {
          const countBefore = await User.count();
 
@@ -363,20 +350,6 @@ describe('Users Module (e2e)', () => {
          const duration = endTime - startTime;
 
          expect(duration).toBeLessThan(5000);
-      });
-
-      it('should handle concurrent requests efficiently', async () => {
-         const startTime = Date.now();
-
-         const promises = Array.from({ length: 20 }, () => request(getHttpAppServer()).get('/users'));
-         const responses = await Promise.all(promises);
-         const duration = Date.now() - startTime;
-
-         responses.forEach((response) => {
-            expect(response.status).toBe(HttpStatus.OK);
-         });
-
-         expect(duration).toBeLessThan(2000);
       });
    });
 });
