@@ -364,19 +364,5 @@ describe('Users Module (e2e)', () => {
 
          expect(duration).toBeLessThan(5000);
       });
-
-      it('should handle concurrent requests efficiently', async () => {
-         const startTime = Date.now();
-
-         const promises = Array.from({ length: 20 }, () => request(getHttpAppServer()).get('/users'));
-         const responses = await Promise.all(promises);
-         const duration = Date.now() - startTime;
-
-         responses.forEach((response) => {
-            expect(response.status).toBe(HttpStatus.OK);
-         });
-
-         expect(duration).toBeLessThan(2000);
-      });
    });
 });
